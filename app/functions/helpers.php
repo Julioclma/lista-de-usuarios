@@ -1,6 +1,7 @@
 <?php
 
-function dd(array $dump){
+function dd($dump)
+{
     var_dump($dump);
     die();
 }
