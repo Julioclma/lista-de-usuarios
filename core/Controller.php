@@ -3,6 +3,8 @@
 namespace core;
 
 use app\classes\Uri;
+use app\controllers\ControllerInterface;
+use app\exceptions\ControllerNotExistException;
 
 class Controller
 {
@@ -21,14 +23,13 @@ class Controller
     public function load(): void
     {
         if ($this->isHome()) {
-            $controller = $this->controllerHome();
-            new $controller;
+            $this->controllerHome()->index();
         }
 
-        return $this->controllerNotHome();
+        $this->controllerNotHome();
     }
 
-    private function controllerHome() : string
+    private function controllerHome(): ControllerInterface
     {
         if (!$this->controllerExist('HomeController')) {
             throw new ControllerNotExistException("Esse controller não existe");
@@ -39,6 +40,25 @@ class Controller
 
     private function controllerNotHome()
     {
+
+        $controller = $this->getControllerNotHome();
+
+        if (!$this->controllerExist($controller)) {
+            dd($controller);
+            throw new ControllerNotExistException("Esse controller não existe");
+        }
+        $this->instantiateController()->index();
+    }
+
+    private function getControllerNotHome(): string
+    {
+        if (substr_count($this->uri, '/') > 1) {
+            list($controller) = explode('/', $this->uri);
+            dd($controller);
+            return ucfirst($controller) . 'Controller';
+        }   
+
+        return ucfirst(ltrim($this->uri, '/')) . 'Controller';
     }
     private function isHome(): bool
     {
@@ -59,9 +79,9 @@ class Controller
         return $controllerExist;
     }
 
-    private function instantiateController() : string
+    private function instantiateController(): ControllerInterface
     {
         $controller = $this->namespace . '\\' . $this->controller;
-        return $controller;
+        return new $controller;
     }
 }
