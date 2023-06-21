@@ -18,7 +18,7 @@ class Method
     public function load(ControllerInterface $controller): void
     {
         $method = $this->getMethod();
-        
+
         if (!method_exists($controller, $method)) {
             throw new MethodNotExistException("Método não existe: {$method}!");
         }
@@ -29,7 +29,7 @@ class Method
     private function getMethod(): string
     {
         if (substr_count($this->uri, '/') > 1) {
-            return array_filter(explode('/', $this->uri))[2];
+          return array_values(array_filter(explode('/', $this->uri)))[1];
         }
 
         return 'index';
