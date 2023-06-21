@@ -2,9 +2,10 @@
 
 namespace app\controllers\portal;
 
+use app\controllers\ContainerController;
 use app\controllers\ControllerInterface;
 
-class ProdutoController implements ControllerInterface
+class ProdutoController extends ContainerController
 {
     public function index(): void
     {
