@@ -2,13 +2,21 @@
 
 namespace app\controllers\portal;
 
+use app\controllers\ContainerController;
 use app\controllers\ControllerInterface;
+use core\Parameters;
 
-class CursoController implements ControllerInterface
+class CursoController extends ContainerController
 {
     public function index(): void
     {
-        dd(get_class());
     }
-    
+
+    public function show(object $request): void
+    {
+
+        $data = (array)$request;
+        $this->view($data, 'portal.curso');
+
+    }
 }

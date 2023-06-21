@@ -6,6 +6,12 @@ namespace Composer\Autoload;
 
 class ComposerStaticInita02dc51d4e2919f6303b76b66011915d
 {
+    public static $files = array (
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'c' => 
         array (
@@ -14,6 +20,17 @@ class ComposerStaticInita02dc51d4e2919f6303b76b66011915d
         'a' => 
         array (
             'app\\' => 4,
+        ),
+        'T' => 
+        array (
+            'Twig\\Extensions\\' => 16,
+            'Twig\\' => 5,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php72\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
     );
 
@@ -26,6 +43,40 @@ class ComposerStaticInita02dc51d4e2919f6303b76b66011915d
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Twig\\Extensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extensions/src',
+        ),
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'Symfony\\Polyfill\\Php72\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/extensions/lib',
+            ),
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -37,6 +88,7 @@ class ComposerStaticInita02dc51d4e2919f6303b76b66011915d
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita02dc51d4e2919f6303b76b66011915d::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita02dc51d4e2919f6303b76b66011915d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita02dc51d4e2919f6303b76b66011915d::$prefixesPsr0;
             $loader->classMap = ComposerStaticInita02dc51d4e2919f6303b76b66011915d::$classMap;
 
         }, null, ClassLoader::class);

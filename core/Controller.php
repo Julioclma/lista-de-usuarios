@@ -3,6 +3,7 @@
 namespace core;
 
 use app\classes\Uri;
+use app\controllers\ContainerController;
 use app\controllers\ControllerInterface;
 use app\exceptions\ControllerNotExistException;
 
@@ -20,7 +21,7 @@ class Controller
     {
         $this->uri = Uri::uri();
     }
-    public function load(): ControllerInterface
+    public function load(): ContainerController
     {
         if ($this->isHome()) {
           return $this->controllerHome();
@@ -29,7 +30,7 @@ class Controller
         return $this->controllerNotHome();
     }
 
-    private function controllerHome(): ControllerInterface
+    private function controllerHome(): ContainerController
     {
         if (!$this->controllerExist('HomeController')) {
             throw new ControllerNotExistException("Esse controller não existe");
@@ -38,7 +39,7 @@ class Controller
         return $this->instantiateController();
     }
 
-    private function controllerNotHome(): ControllerInterface
+    private function controllerNotHome(): ContainerController
     {
 
         $controller = $this->getControllerNotHome();
@@ -79,7 +80,7 @@ class Controller
         return $controllerExist;
     }
 
-    private function instantiateController(): ControllerInterface
+    private function instantiateController(): ContainerController
     {
         $controller = $this->namespace . '\\' . $this->controller;
         return new $controller;
