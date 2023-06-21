@@ -3,6 +3,8 @@
 namespace core;
 
 use app\classes\Uri;
+use app\controllers\ControllerInterface;
+use app\exceptions\ControllerNotExistException;
 
 class Controller
 {
@@ -18,17 +20,16 @@ class Controller
     {
         $this->uri = Uri::uri();
     }
-    public function load(): void
+    public function load(): ControllerInterface
     {
         if ($this->isHome()) {
-            $controller = $this->controllerHome();
-            new $controller;
+          return $this->controllerHome();
         }
 
         return $this->controllerNotHome();
     }
 
-    private function controllerHome() : string
+    private function controllerHome(): ControllerInterface
     {
         if (!$this->controllerExist('HomeController')) {
             throw new ControllerNotExistException("Esse controller não existe");
@@ -37,8 +38,27 @@ class Controller
         return $this->instantiateController();
     }
 
-    private function controllerNotHome()
+    private function controllerNotHome(): ControllerInterface
     {
+
+        $controller = $this->getControllerNotHome();
+
+        if (!$this->controllerExist($controller)) {
+            throw new ControllerNotExistException("Esse controller não existe");
+        }
+       return $this->instantiateController();
+    }
+
+    private function getControllerNotHome(): string
+    {
+        if (substr_count($this->uri, '/') > 1) {
+            $explode = explode('/', $this->uri);
+            list($controller, $method) = array_values(array_filter($explode));
+            $controller = ucfirst($controller) . 'Controller';
+            return $controller;
+        }
+
+        return ucfirst(ltrim($this->uri, '/')) . 'Controller';
     }
     private function isHome(): bool
     {
@@ -59,9 +79,9 @@ class Controller
         return $controllerExist;
     }
 
-    private function instantiateController() : string
+    private function instantiateController(): ControllerInterface
     {
         $controller = $this->namespace . '\\' . $this->controller;
-        return $controller;
+        return new $controller;
     }
 }
