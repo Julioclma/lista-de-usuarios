@@ -9,5 +9,10 @@ class HomeController implements ControllerInterface
     {
         dd(get_class());
     }
+
+    public function action() : void
+    {
+        dd("action..");
+    }
     
 }

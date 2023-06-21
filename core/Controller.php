@@ -20,13 +20,13 @@ class Controller
     {
         $this->uri = Uri::uri();
     }
-    public function load(): void
+    public function load(): ControllerInterface
     {
         if ($this->isHome()) {
-            $this->controllerHome()->index();
+          return $this->controllerHome();
         }
 
-        $this->controllerNotHome();
+        return $this->controllerNotHome();
     }
 
     private function controllerHome(): ControllerInterface
@@ -38,25 +38,25 @@ class Controller
         return $this->instantiateController();
     }
 
-    private function controllerNotHome()
+    private function controllerNotHome(): ControllerInterface
     {
 
         $controller = $this->getControllerNotHome();
 
         if (!$this->controllerExist($controller)) {
-            dd($controller);
             throw new ControllerNotExistException("Esse controller não existe");
         }
-        $this->instantiateController()->index();
+       return $this->instantiateController();
     }
 
     private function getControllerNotHome(): string
     {
         if (substr_count($this->uri, '/') > 1) {
-            list($controller) = explode('/', $this->uri);
-            dd($controller);
-            return ucfirst($controller) . 'Controller';
-        }   
+            $explode = explode('/', $this->uri);
+            list($controller, $method) = array_values(array_filter($explode));
+            $controller = ucfirst($controller) . 'Controller';
+            return $controller;
+        }
 
         return ucfirst(ltrim($this->uri, '/')) . 'Controller';
     }
