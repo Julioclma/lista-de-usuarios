@@ -9,8 +9,10 @@ trait View
     private function twig()
     {
         $twig = new Twig;
-        
-        return $twig->loadTwig();
+        $loadTwig = $twig->loadTwig();
+        $twig->loadExtensions();
+        $twig->loadFunctions();
+        return $loadTwig;
     }
 
     public function view(array $data, string $view)
