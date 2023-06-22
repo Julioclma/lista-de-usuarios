@@ -15,8 +15,10 @@ class CursoController extends ContainerController
     public function show(object $request): void
     {
 
-        $data = (array)$request;
-        $this->view($data, 'portal.curso');
-
+        $this->view([
+            'title' => 'Curso',
+            'user' => 'dados do user',
+            'curso' => 'LOREM IPSUM DOLOR SIT AMET, CONSECTTETUR ADIPISICING ELIT. LOREM IPSUM DOLOR SIT AMET, CONSECTTETUR ADIPISICING ELIT. LOREM IPSUM DOLOR SIT AMET, CONSECTTETUR ADIPISICING ELIT. LOREM IPSUM DOLOR SIT AMET, CONSECTTETUR ADIPISICING ELIT'
+        ], 'portal.curso');
     }
 }
